@@ -50,8 +50,10 @@ def parse_args():
     parser.add_argument('--bounce', action='store_true', help='Bounce digits against walls')
     parser.add_argument('--overlap_free_initial_position', action='store_true', help='Place digits initially without overlap (as best as we could).')
     parser.add_argument('--frame_dropout_pattern', type=str, required=False, help='Frame dropout pattern')
-    parser.add_argument('--frame_dropout_probs', nargs='*', type=float, default=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6], help='List of frame dropout probabilities')
-    parser.add_argument('--sampler_steps', nargs='*', type=int, default=[2, 4, 6, 8, 10], help='Sampler steps')
+    parser.add_argument('--frame_dropout_probs', nargs='*', type=float,
+                        default=[0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85], help='List of frame dropout probabilities')
+    parser.add_argument('--sampler_steps', nargs='*', type=int,
+                        default=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], help='Sampler steps')
 
     # wandb
     parser.add_argument('--wandb_project', type=str, default='sensor-dropout', help='Wandb project')
@@ -246,6 +248,13 @@ def get_wandb_init_config(args):
         result['resume'] = 'must'
     else:
         notes = f'model:{args.model},num_objects:{args.num_objects}'
+
+        if args.backbone is not None:
+            notes += f',backbone:{args.backbone}'
+
+        if args.frame_dropout_probs is not None and len(args.frame_dropout_probs) > 0:
+            notes += f',frame_dropout_probs:{len(args.frame_dropout_probs)}'
+
         result['notes'] = notes
 
     return result

@@ -62,4 +62,6 @@ python train.py \
     --frame_dropout_probs \
     --num_objects $num_objects \
     --self_per_cross_attn $self_per_cross_attn \
+    --focal_loss \
+    --eval_interval 4 \
     --img_size 128

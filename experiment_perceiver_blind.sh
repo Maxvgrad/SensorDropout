@@ -52,4 +52,6 @@ python train.py \
     --num_workers 4 \
     --frame_dropout_pattern '00001111' \
     --num_objects $num_objects \
+    --focal_loss \
+    --eval_interval 4 \
     --img_size 128
